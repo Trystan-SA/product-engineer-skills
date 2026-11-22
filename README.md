@@ -1,6 +1,6 @@
 # Product Engineer Skills
 
-Agent skills that measure and improve how people get through your product. They count the clicks on your happy path, turn flows into tests with a UX budget, plan feature adoption, instrument analytics, and design and read A/B tests — working in your real codebase, with Claude Code, Codex, or any agent that reads `SKILL.md`.
+Agent skills that measure and improve how people get through your product. They prepare user research, count the clicks on your happy path, turn flows into tests with a UX budget, plan feature adoption, instrument analytics, design and read A/B tests, and check after launch whether a feature delivered — working in your real codebase, with Claude Code, Codex, or any agent that reads `SKILL.md`.
 
 > **Formerly `claude-design-system-prompt`.** Claude now handles visual design natively with `/design`, so this repository moved on to what comes after the mockup: getting features used. The previous prompt and skills remain available at the [`v1-design-prompt`](https://github.com/Trystan-SA/product-engineer-skills/tree/v1-design-prompt) tag.
 
@@ -40,14 +40,17 @@ npx skills add Trystan-SA/product-engineer-skills
 
 | Ask | Skill | You get |
 |---|---|---|
+| "Do our users really need bulk invoicing?" | `user-interviews` | Research plan, behavior-based screener and interview guide, synthesis with evidence-weighted themes |
 | "We should build bulk invoicing" | `feature-brief` | Problem, job story, one success metric with a target, click budget, kill criteria |
 | "How many clicks does it take to send an invoice?" | `happy-path-audit` | Step table traced through the code, click and field counts, KLM time estimate, ranked reductions |
 | "What happens if the payment fails here?" | `unhappy-paths` | Error, empty, loading, permission and session states for every step, dead ends fixed |
 | "Make sure signup never gets longer" | `flow-test` | Playwright tests that fail when the flow exceeds its click and field budget |
+| "Plan a user test for the new checkout" | `usability-test-plan` | Task scenarios, moderator script, note grid, issues ranked by severity and linked to fixes |
 | "Nobody uses the export feature" | `adoption-plan` | Funnel from exposure to retention, entry points mapped to moments of need, diagnosis |
 | "Add tracking for the new onboarding" | `instrument-feature` | Tracking plan wired into your existing analytics SDK, verified to fire once |
 | "Can we A/B test the new pricing page?" | `ab-test-design` | Hypothesis, metrics, sample size and duration, variant behind your feature flags |
 | "Did the test win?" | `experiment-readout` | Validity checks, lift with confidence intervals, a ship / iterate / roll back call |
+| "Is the invoicing feature working?" | `launch-review` | Promised versus actual metrics, first broken funnel stage, keep / rework / remove decision |
 | "Pull tokens out of our CSS" | `design-system-extract` | Tokens file in your stack's format, with the inconsistencies found |
 | "Is our design system actually used?" | `design-system-adoption` | Adoption % per category and area, duplicate components, migration plan with lint ratchet |
 | "Check this flow for accessibility" | `accessibility-audit` | WCAG 2.2 AA review with automated and manual passes, fixes in code |
@@ -59,15 +62,17 @@ Skills that work on a feature share a folder, so each one builds on what the oth
 
 ```
 docs/product/<feature>/
-├── brief.md            feature-brief         goal, metric, budget
+├── research.md         user-interviews       plan, guide, synthesis
+├── brief.md            feature-brief         goal, metric, budget — and launch-review's verdict
 ├── flow-audit.md       happy-path-audit      steps, counts, reductions
 ├── unhappy-paths.md    unhappy-paths         state matrix, fixes
+├── usability-test.md   usability-test-plan   tasks, script, ranked issues
 ├── adoption-plan.md    adoption-plan         funnel, entry points
 ├── tracking-plan.md    instrument-feature    events, funnels
 └── experiment.md       ab-test-design        spec, then experiment-readout's results
 ```
 
-A typical feature goes `feature-brief` → `happy-path-audit` → `unhappy-paths` → `flow-test` → `instrument-feature` → `adoption-plan` → `ab-test-design` → `experiment-readout`, with `ux-review` on every PR that touches the UI. Each skill also works on its own. If your project keeps product docs somewhere else, the skills use that location.
+A typical feature goes `user-interviews` → `feature-brief` → `happy-path-audit` → `unhappy-paths` → `flow-test` → `instrument-feature` → `adoption-plan` → `ab-test-design` → `experiment-readout` → `launch-review`, with `usability-test-plan` whenever the team is unsure how a flow will be used and `ux-review` on every PR that touches the UI. Each skill also works on its own. If your project keeps product docs somewhere else, the skills use that location.
 
 ## Principles
 

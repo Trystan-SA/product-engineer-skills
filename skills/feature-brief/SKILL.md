@@ -18,7 +18,7 @@ Read what already exists: the ticket or PRD, linked discussions, the code the fe
 Ask one consolidated round of questions, limited to what changes the brief:
 
 - **Who** — which segment, role or plan? First-time or returning users?
-- **Evidence** — what shows the problem is real (support tickets, interviews, data, churn reasons)? "Nothing yet" is a valid answer; the brief will mark it as an assumption.
+- **Evidence** — what shows the problem is real (support tickets, interviews, data, churn reasons)? "Nothing yet" is a valid answer; the brief will mark it as an assumption, and `user-interviews` can gather the evidence.
 - **Success** — what would make this worth it in six weeks? Push from outputs ("feature shipped") to outcomes ("teams send their first invoice in under two minutes").
 - **Constraints** — deadline, platforms, what's off limits.
 
@@ -74,7 +74,7 @@ Check the draft against these failure modes and fix or flag each one:
 2. **Vanity metric.** Page views, clicks on the entry point and "users who saw it" measure exposure, not value. Replace them with the value moment.
 3. **Cheaper solution.** Could a copy change, a better default, or surfacing an existing feature solve the problem? Say so. It's the most valuable sentence a brief can contain. When demand itself is the open question, propose a fake-door test first: the entry point ships alone, counts the clicks, and tells users honestly that the feature is coming.
 4. **Solution posing as a problem.** "Users need a dashboard" is a solution. Rewrite it as the need.
-5. **No kill criterion.** A feature without one is never removed. Pick a threshold the team would genuinely act on.
+5. **No kill criterion.** A feature without one is never removed. Pick a threshold the team would genuinely act on; `launch-review` checks it at the review date.
 6. **No budget.** If the happy path has no click budget, estimate one now; `happy-path-audit` will refine it.
 
 ## Output
