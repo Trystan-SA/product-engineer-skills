@@ -67,7 +67,7 @@ Simplified placement of M: one before each decision, before starting to type int
 
 On touch, don't reuse the mouse values: count taps and fields, and give seconds only when you can justify the numbers (for example, from measurements).
 
-KLM models an expert performing without errors; first-time users are slower. Use it to compare versions of the same flow, never to promise users a duration.
+KLM models an expert performing without errors; first-time users are slower. Use it to compare versions of the same flow, never to promise users a duration. To see where real users struggle, run `usability-test-plan`.
 
 ## Phase 5: Find reductions
 

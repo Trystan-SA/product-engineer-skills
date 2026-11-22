@@ -55,7 +55,7 @@ Targeted, in context, and proportional to the feature: an in-app announcement sh
 
 ## Phase 7: Set targets and review dates
 
-For each funnel stage: the baseline (from a comparable feature, if any), the target, and when to look — typically two weeks after launch for exposure and trial, six to eight weeks for retention. Agree in advance on what you'll do if a target is missed.
+For each funnel stage: the baseline (from a comparable feature, if any), the target, and when to look — typically two weeks after launch for exposure and trial, six to eight weeks for retention. Agree in advance on what you'll do if a target is missed; `launch-review` runs this check at the review date.
 
 ## Diagnosing low adoption after launch
 
@@ -65,9 +65,9 @@ Find the first stage with a sharp drop and work on that stage only:
 |---|---|---|
 | Exposed | Entry points invisible or in the wrong place | Contextual entry points at moments of need; check permissions and flags |
 | Tried | The value isn't clear from the entry point | Rewrite the entry point around the outcome, and test it (`ab-test-design`) |
-| Activated | Too much friction before value | `happy-path-audit` and `unhappy-paths` on the activation path |
+| Activated | Too much friction before value | `happy-path-audit` and `unhappy-paths` on the activation path; watch five users try it (`usability-test-plan`) |
 | Repeated | No trigger, or the value is one-off | Add a trigger, or check whether repeat use is expected at all |
-| Retained | The value fades, or a better alternative exists | Talk to users who stopped using it |
+| Retained | The value fades, or a better alternative exists | Interview users who stopped using it (`user-interviews`) |
 
 ## Output
 

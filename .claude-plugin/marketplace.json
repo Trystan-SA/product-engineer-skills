@@ -9,7 +9,7 @@
     {
       "name": "product-engineer",
       "source": "./",
-      "description": "Skills for product engineers and product owners: count the clicks on a happy path, test flows against a UX budget, plan feature adoption, instrument analytics, design and read A/B tests, and measure design-system adoption.",
+      "description": "Skills for product engineers and product owners: prepare user interviews and usability tests, count the clicks on a happy path, test flows against a UX budget, plan feature adoption, instrument analytics, design and read A/B tests, review launches against their goals, and measure design-system adoption.",
       "category": "productivity"
     }
   ]
