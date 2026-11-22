@@ -1,143 +1,103 @@
-# Claude Design System Prompt
+# Product Engineer Skills
 
-Reverse-engineered system prompt of Claude Design from Anthropic.
+Agent skills that measure and improve how people get through your product. They count the clicks on your happy path, turn flows into tests with a UX budget, plan feature adoption, instrument analytics, and design and read A/B tests — working in your real codebase, with Claude Code, Codex, or any agent that reads `SKILL.md`.
 
-A system prompt and skill library that turns an LLM into an opinionated, accessibility-aware, AI-slop-resistant design collaborator.
+> **Formerly `claude-design-system-prompt`.** Claude now handles visual design natively with `/design`, so this repository moved on to what comes after the mockup: getting features used. The previous prompt and skills remain available at the [`v1-design-prompt`](https://github.com/Trystan-SA/product-engineer-skills/tree/v1-design-prompt) tag.
 
-Open source, MIT licensed. Drop the prompt into any LLM that supports system prompts (Claude, GPT, Gemini, local models) and pair with the procedural skills as needed.
+## Install
 
-## What this is
-
-Most "design assistant" prompts produce generic SaaS-template output — aggressive gradients, emoji decoration, rounded-corner-with-left-border cards, Inter-everywhere typography. This prompt explicitly rejects those patterns and replaces them with a complete design philosophy covering:
-
-- Content discipline (no filler — every element earns its place)
-- Aesthetic discipline (avoid AI tropes, commit to a palette and tone)
-- Visual hierarchy and rhythm (size, color, weight, position, density, spacing scales)
-- Accessibility (WCAG, semantic HTML, keyboard navigation, focus rings, motion preferences)
-- Interaction and feedback (hover, active, disabled, focus, loading, validation states)
-- System thinking (components and tokens over one-off pages)
-- Respecting the medium (real CSS Grid, `oklch()`, `text-wrap: pretty`, real interactive prototypes)
-- Quality over quantity (depth over breadth, polish every detail)
-
-Plus 14 procedural skills the agent can invoke for production, extraction, and review work.
-
-## What's included
+**Claude Code**
 
 ```
-claude-design-system-prompt/
-├── claude/                              Claude Code / Claude.ai variant
-│   ├── system-prompt.md                 Main system prompt — 20 chapters
-│   └── skills/                          14 invokable skills
-│       ├── discovery-questions.md       Kickoff question protocol
-│       ├── frontend-aesthetic-direction.md  Commit to a look when no brand exists
-│       ├── wireframe.md                 Low-fi exploration, 3+ variations
-│       ├── make-a-deck.md               Slide presentations in HTML
-│       ├── make-a-prototype.md          Interactive clickable prototype
-│       ├── make-tweakable.md            Floating tweak panel
-│       ├── generate-variations.md       3+ hi-fi variations across axes
-│       ├── design-system-extract.md     Pull tokens from sources
-│       ├── component-extract.md         Inventory reusable components
-│       ├── accessibility-audit.md       WCAG, semantic, keyboard, motion
-│       ├── ai-slop-check.md             Gradient / emoji / font / house-style trope detection
-│       ├── hierarchy-rhythm-review.md   Size / weight / color + spacing scale
-│       ├── interaction-states-pass.md   Hover / active / disabled / focus / loading
-│       └── polish-pass.md               Umbrella final-gate review
-├── codex/                               OpenAI Codex variant (single-loop, no subagents)
-│   ├── AGENTS.md                        Codex auto-discovered entry point
-│   ├── system-prompt.md                 Same prompt, adapted for Codex
-│   └── skills/                          Same skills, sequential reviews instead of parallel agents
-├── README.md                            This file
-└── LICENSE                              MIT
+/plugin install product-engineer --marketplace Trystan-SA/product-engineer-skills
 ```
 
-## How to use it
-
-### Use the system prompt directly
-
-Paste the contents of `system-prompt.md` as the system prompt for any LLM that supports them. The agent will follow the design philosophy and reference the skills by name when tasks match.
-
-### Use the skills as procedures
-
-Each skill in `skills/` is a self-contained, phased procedure. The skill name is the trigger — when the user's request matches a skill description, the agent loads that skill and follows it.
-
-Skills group into three categories:
-
-**Production** — build something
-`discovery-questions` · `frontend-aesthetic-direction` · `wireframe` · `make-a-deck` · `make-a-prototype` · `make-tweakable` · `generate-variations`
-
-**System** — extract structure
-`design-system-extract` · `component-extract`
-
-**Review** — audit and fix
-`accessibility-audit` · `ai-slop-check` · `hierarchy-rhythm-review` · `interaction-states-pass` · `polish-pass`
-
-Skills can be chained. A typical greenfield flow:
+On Claude Code versions older than 2.1.275, add the marketplace first:
 
 ```
-discovery-questions → frontend-aesthetic-direction → wireframe → make-a-prototype → polish-pass
+/plugin marketplace add Trystan-SA/product-engineer-skills
+/plugin install product-engineer@product-engineer-skills
 ```
 
-A brand-aware flow:
+Skills load on their own when a request matches, or on demand as `/product-engineer:<skill>`. To share it with your team, run `claude plugin marketplace add Trystan-SA/product-engineer-skills --scope project` and commit `.claude/settings.json`.
+
+**Codex**
+
+```bash
+codex plugin marketplace add Trystan-SA/product-engineer-skills
+codex plugin add product-engineer@product-engineer-skills
+```
+
+Or run `/plugins` inside Codex and install it from the list.
+
+**Other agents** (Cursor, OpenCode, Gemini CLI and more) with the open-source [`skills` CLI](https://github.com/vercel-labs/skills):
+
+```bash
+npx skills add Trystan-SA/product-engineer-skills
+```
+
+## What you can ask
+
+| Ask | Skill | You get |
+|---|---|---|
+| "We should build bulk invoicing" | `feature-brief` | Problem, job story, one success metric with a target, click budget, kill criteria |
+| "How many clicks does it take to send an invoice?" | `happy-path-audit` | Step table traced through the code, click and field counts, KLM time estimate, ranked reductions |
+| "What happens if the payment fails here?" | `unhappy-paths` | Error, empty, loading, permission and session states for every step, dead ends fixed |
+| "Make sure signup never gets longer" | `flow-test` | Playwright tests that fail when the flow exceeds its click and field budget |
+| "Nobody uses the export feature" | `adoption-plan` | Funnel from exposure to retention, entry points mapped to moments of need, diagnosis |
+| "Add tracking for the new onboarding" | `instrument-feature` | Tracking plan wired into your existing analytics SDK, verified to fire once |
+| "Can we A/B test the new pricing page?" | `ab-test-design` | Hypothesis, metrics, sample size and duration, variant behind your feature flags |
+| "Did the test win?" | `experiment-readout` | Validity checks, lift with confidence intervals, a ship / iterate / roll back call |
+| "Pull tokens out of our CSS" | `design-system-extract` | Tokens file in your stack's format, with the inconsistencies found |
+| "Is our design system actually used?" | `design-system-adoption` | Adoption % per category and area, duplicate components, migration plan with lint ratchet |
+| "Check this flow for accessibility" | `accessibility-audit` | WCAG 2.2 AA review with automated and manual passes, fixes in code |
+| "Review this PR for UX" | `ux-review` | Before/after flow cost, missing states, accessibility, design-system drift, copy, tracking |
+
+## How the skills work together
+
+Skills that work on a feature share a folder, so each one builds on what the others found:
 
 ```
-design-system-extract → generate-variations → make-tweakable → polish-pass
+docs/product/<feature>/
+├── brief.md            feature-brief         goal, metric, budget
+├── flow-audit.md       happy-path-audit      steps, counts, reductions
+├── unhappy-paths.md    unhappy-paths         state matrix, fixes
+├── adoption-plan.md    adoption-plan         funnel, entry points
+├── tracking-plan.md    instrument-feature    events, funnels
+└── experiment.md       ab-test-design        spec, then experiment-readout's results
 ```
 
-### Adapt for your platform
+A typical feature goes `feature-brief` → `happy-path-audit` → `unhappy-paths` → `flow-test` → `instrument-feature` → `adoption-plan` → `ab-test-design` → `experiment-readout`, with `ux-review` on every PR that touches the UI. Each skill also works on its own. If your project keeps product docs somewhere else, the skills use that location.
 
-The prompt assumes an HTML-output design environment (similar to Claude.ai's design tool). If your target environment is different — a Figma plugin, a code-only assistant, a chat-only design coach — you'll need to adjust the workflow chapters and tool references. The principles (chapters 5–16) translate to any medium.
+## Principles
 
-## Model calibration
+- **Count, don't guess.** Every number is labeled as measured (from running the app, a test or data), traced (from reading the code) or estimated (with the reason).
+- **Work in the real code.** Skills reuse your analytics wrapper, feature-flag tool, E2E framework and design system. They never add a dependency without asking.
+- **Outcomes over outputs.** Value moments, not page views; one primary metric decided before the data arrives.
+- **Make improvements stick.** Click budgets in CI, lint ratchets for design tokens, pre-registered experiment analyses.
 
-The `claude/` variant is calibrated for current Anthropic frontier models (Fable 5 and the Opus 4.7/4.8 lineage), which follow instructions more literally and need less aggressive prompting than earlier generations:
+## Repository layout
 
-- **Conditions instead of quotas.** No "ask at least N questions", no "CRITICAL: YOU MUST". Current models treat quotas as literal contracts and over-trigger on them; the prompt states the conditions under which to act, plus an autonomy clause for minor decisions (pick a reasonable option and note it, rather than asking).
-- **Explicit triggers for skills and subagents.** These models under-reach for optional capabilities by default, so every skill description states *when* to invoke it, and verifier delegation has an explicit trigger ("after every substantive visual change").
-- **Coverage-first reviews.** Review agents report everything with confidence/severity estimates and let the aggregation step filter. Current models follow "only report important issues" literally, which silently suppresses findings.
-- **House-style guard.** The current models' default aesthetic (cream background, serif display type, terracotta/amber accents) is detected by `ai-slop-check` (rule 9) and pre-empted by `frontend-aesthetic-direction`'s four-directions protocol. Sampling parameters (`temperature`) no longer exist on these models, so visual variety must come from explicit per-variation specs, not randomness.
-
-On older models (Claude Opus/Sonnet 4.6 and earlier, or non-Anthropic models), the calmer phrasing may under-trigger — restore stronger imperative language if you see the model skipping question rounds or reviews. The `codex/` variant is maintained separately and is unaffected by these notes.
-
-## Design principles, in short
-
-The 20 chapters in `system-prompt.md` cover:
-
-| #   | Chapter                                   |
-| --- | ----------------------------------------- |
-| 1   | Identity and role                         |
-| 2   | Workflow                                  |
-| 3   | Asking questions first                    |
-| 4   | Rooting designs in existing context       |
-| 5   | Content principles — no filler            |
-| 6   | Aesthetic principles — purposeful visuals |
-| 7   | Visual hierarchy and rhythm               |
-| 8   | Typography system                         |
-| 9   | Color system                              |
-| 10  | Accessibility and inclusivity             |
-| 11  | Interaction and feedback                  |
-| 12  | Simplicity and one clear CTA              |
-| 13  | System thinking                           |
-| 14  | Respecting the medium                     |
-| 15  | Understanding users                       |
-| 16  | Quality over quantity                     |
-| 17  | Output principles                         |
-| 18  | Collaboration and delivery                |
-| 19  | IP and content boundaries                 |
-| 20  | Available skills                          |
+```
+skills/<name>/SKILL.md           one folder per skill (+ scripts/ when a skill bundles code)
+.claude-plugin/plugin.json       Claude Code plugin manifest
+.claude-plugin/marketplace.json  Claude Code marketplace
+plugin.json                      portable manifest, read by Codex
+.agents/plugins/marketplace.json Codex marketplace
+tools/check_skills.py            portability checks run in CI
+tests/                           tests for the bundled scripts
+```
 
 ## Contributing
 
-Issues and PRs welcome. Particularly useful contributions:
+Issues and pull requests are welcome, especially real-world cases where a skill gave a wrong count or missed a state. Conventions:
 
-- Additional review skills (e.g., copy review, motion review, dark-mode parity check)
-- Adapted prompts for other environments (Figma, code-only, terminal-only)
-- Real-world failure cases the prompt should defend against
-- Translations of the prompt into other languages
-
-Please keep the same operational tone and avoid bloating the prompt — every chapter should earn its place, the same standard the prompt holds the agent to.
+- **Frontmatter** has `name` (equal to the folder name) and `description` only, so skills load in Claude Code, Codex and claude.ai. The description says what the skill does, then "Use when …".
+- **Agent-neutral bodies.** No tool names specific to one agent. Where parallel work helps, write "if you can run subagents, run these in parallel; otherwise run them one after another".
+- **Bundled scripts** use the Python standard library only and come with tests in `tests/`.
+- **Checks.** `python3 tools/check_skills.py`, `python3 -m unittest discover -s tests` and `claude plugin validate . --strict` must pass; CI runs them, then installs the plugin in Codex and checks that every skill is listed.
+- **Releases** bump `version` in both `plugin.json` files. Installed copies update only when it changes.
 
 ## License
 
-MIT — see `LICENSE`.
-
-You can use, modify, and distribute this prompt and skill library for any purpose, including commercial use. No attribution required, but appreciated.
+MIT — see [LICENSE](LICENSE).

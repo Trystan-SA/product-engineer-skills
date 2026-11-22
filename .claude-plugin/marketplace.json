@@ -1,0 +1,16 @@
+{
+  "name": "product-engineer-skills",
+  "description": "Product engineering skills for Claude Code and Codex: flows, click budgets, adoption, analytics, A/B tests and design-system adoption.",
+  "owner": {
+    "name": "Trystan-SA",
+    "url": "https://github.com/Trystan-SA"
+  },
+  "plugins": [
+    {
+      "name": "product-engineer",
+      "source": "./",
+      "description": "Skills for product engineers and product owners: count the clicks on a happy path, test flows against a UX budget, plan feature adoption, instrument analytics, design and read A/B tests, and measure design-system adoption.",
+      "category": "productivity"
+    }
+  ]
+}

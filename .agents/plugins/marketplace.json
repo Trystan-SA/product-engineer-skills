@@ -1,0 +1,12 @@
+{
+  "name": "product-engineer-skills",
+  "interface": { "displayName": "Product Engineer Skills" },
+  "plugins": [
+    {
+      "name": "product-engineer",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}
