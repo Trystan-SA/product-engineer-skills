@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "product-engineer",
+  "version": "2.0.0",
+  "description": "Skills for product engineers and product owners: count the clicks on a happy path, test flows against a UX budget, plan feature adoption, instrument analytics, design and read A/B tests, and measure design-system adoption.",
+  "author": { "name": "Trystan-SA", "url": "https://github.com/Trystan-SA" },
+  "homepage": "https://github.com/Trystan-SA/product-engineer-skills",
+  "repository": "https://github.com/Trystan-SA/product-engineer-skills",
+  "license": "MIT",
+  "keywords": ["product", "ux", "user-flows", "ab-testing", "analytics", "adoption", "design-system", "playwright"]
+}

@@ -1,0 +1,39 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check skills, manifests and README
+        run: python tools/check_skills.py
+
+      - name: Test bundled scripts
+        run: python -m unittest discover -s tests -v
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validate plugin and marketplace with Claude Code
+        run: npx -y @anthropic-ai/claude-code@2.1.330 plugin validate . --strict
+
+      - name: Install with Codex and check every skill is listed
+        env:
+          CODEX_HOME: ${{ runner.temp }}/codex-home
+        run: |
+          mkdir -p "$CODEX_HOME"
+          npx -y @openai/codex@0.170.0 plugin marketplace add "$GITHUB_WORKSPACE"
+          npx -y @openai/codex@0.170.0 plugin add product-engineer@product-engineer-skills
+          npx -y @openai/codex@0.170.0 debug prompt-input "list skills" > "$RUNNER_TEMP/codex-prompt.json"
+          python tools/check_skills.py --codex-prompt "$RUNNER_TEMP/codex-prompt.json"
